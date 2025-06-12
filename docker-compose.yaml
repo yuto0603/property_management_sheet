@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - APACHE_RUN_USER=#1000
+      - APACHE_RUN_GROUP=#1000
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: monitor_system
+      MYSQL_USER: fuelphp_user
+      MYSQL_PASSWORD: fuelphp_password
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+       
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin # phpMyAdminの公式Dockerイメージ
+      ports:
+        - "8081:80" # ホストの8081番ポートをphpMyAdminコンテナの80番ポートにマッピング
+      environment:
+        PMA_HOST: db # MySQLコンテナのサービス名 (db) を指定
+        MYSQL_ROOT_PASSWORD: root_password # MySQLのrootパスワードと合わせる
+      depends_on:
+        - db # dbサービスが起動してからphpmyadminを起動する
+
+
+volumes:
+  db_data:
