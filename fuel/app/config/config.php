@@ -155,6 +155,7 @@ return array(
 	 */
 
 	'locale' => 'ja_JP.UTF-8',
+
 	/**
 	 * -------------------------------------------------------------------------
 	 *  Internal string encoding charset

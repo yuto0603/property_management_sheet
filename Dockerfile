@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.1-apache
 
 RUN a2enmod rewrite
 
@@ -19,13 +19,13 @@ RUN docker-php-ext-install -j$(nproc) mysqli pdo_mysql mbstring gd zip intl opca
 
 # ApacheのドキュメントルートをFuelPHPのpublicディレクトリに設定
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
+#RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+#RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
 # ApacheのAllowOverrideをAllに設定
-RUN echo "<Directory /var/www/html/public>" >> /etc/apache2/apache2.conf \
-    && echo "    AllowOverride All" >> /etc/apache2/apache2.conf \
-    && echo "</Directory>" >> /etc/apache2/apache2.conf
+#RUN echo "<Directory /var/www/html/public>" >> /etc/apache2/apache2.conf \
+ #   && echo "    AllowOverride All" >> /etc/apache2/apache2.conf \
+  #  && echo "</Directory>" >> /etc/apache2/apache2.conf
 
 # Composer のインストール
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
