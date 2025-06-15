@@ -8,10 +8,15 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - .:/var/www/html
+      # ホスト側の FuelPHP アプリケーションコードをマウント
+      # vendor ディレクトリはコンテナ内で管理されるように、マウントから除外（または匿名ボリュームを使用）
+      # ここでは、アプリケーションコードはマウントしつつ、vendorはマウントしないようにする
+      - .:/var/www/html:delegated # :delegated はWSL2でのパフォーマンス改善に役立つことがある
+      # 以下を追加して、ホスト側の vendor ディレクトリがコンテナに上書きされないようにする
+      - /var/www/html/fuel/vendor
     environment:
-       - FUEL_ENV=development 
-       - FUEL_BASE_PATH=/var/www/html/fuel/
+        - FUEL_ENV=development 
+        - FUEL_BASE_PATH=/var/www/html/fuel/
     depends_on:
       - db
 

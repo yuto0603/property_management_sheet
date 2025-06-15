@@ -5,15 +5,20 @@
     "keywords": ["application", "website", "development", "framework", "PHP", "PHP7"],
     "license": "MIT",
     "require": {
-        "php": ">=5.4",
-        "composer/installers": "~1.0",
+        "php": ">=8.2.0",
+        "composer/installers": "^1.0",
         "fuel/core": "dev-1.9/develop",
         "fuel/auth": "dev-1.9/develop",
-        "fuel/email": "dev-1.9/develop",
+        "fuel/email": "dev-1.9/develop", 
         "fuel/oil": "dev-1.9/develop",
-        "fuel/orm": "dev-1.9/develop",
-        "fuel/parser": "dev-1.9/develop",
-        "fuelphp/upload": "2.0.6"
+        "fuel/orm": "dev-1.9/develop", 
+        "fuel/parser": "dev-1.9/develop", 
+        "fuelphp/upload": "^2.0.6",
+        "monolog/monolog": "^1.27.1",
+        "psr/log": "^1.1.4",
+        "paragonie/sodium_compat": "^1.21.1", 
+        "paragonie/constant_time_encoding": "^2.6", 
+        "phpseclib/phpseclib": "~3.0"
     },
     "require-dev": {
         "fuel/docs": "dev-1.9/develop"
@@ -31,6 +36,9 @@
         "vendor-dir": "fuel/vendor",
         "allow-plugins": {
             "composer/installers": true
+        },
+        "platform": {
+            "php": "8.0"
         }
     },
     "extra": {
@@ -44,5 +52,6 @@
             "php oil r install"
         ]
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev", 
+    "prefer-stable": true
 }
