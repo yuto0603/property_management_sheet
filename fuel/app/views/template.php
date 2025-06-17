@@ -2,53 +2,24 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title><?php echo $title; ?></title>
+    <title><?php echo isset($title) ? $title : \Fuel\Core\Lang::get('system_name'); ?></title>
     <?php echo \Fuel\Core\Asset::css('bootstrap.min.css'); ?>
     <?php echo Asset::css('style.css'); ?> 
-    <style>
-        body { margin: 50px; }
-        .card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-            min-height: 120px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .card a {
-            color: #007bff; /* Bootstrap primary blue */
-            text-decoration: underline;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-        .card p {
-            margin: 0;
-        }
-        .navbar .nav-item .nav-link.active {
-            background-color: #007bff; /* Active pill color */
-            color: white !important;
-            border-radius: .25rem;
-        }
-    </style>
-    <?php echo \Fuel\Core\Asset::js('jquery.min.js'); ?>
-    <?php echo \Fuel\Core\Asset::js('bootstrap.min.js'); ?>
 </head>
 <body>
     <div class="container">
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <header class="mb-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg shadow-sm">
                 <a class="navbar-brand" href="<?php echo \Fuel\Core\Uri::base(); ?>"><?php echo \Fuel\Core\Lang::get('system_name'); ?></a>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav nav nav-pills mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (\Fuel\Core\Uri::segment(1) === 'item' || \Fuel\Core\Uri::segment(1) === null) ? 'active' : ''; ?>" href="<?php echo \Fuel\Core\Uri::base().'items'; ?>">
+                            <a class="nav-link <?php echo (\Fuel\Core\Uri::segment(1) === 'item' || \Fuel\Core\Uri::segment(1) === null || \Fuel\Core\Uri::segment(1) === 'items') ? 'active' : ''; ?>" href="<?php echo \Fuel\Core\Uri::base().'items'; ?>">
                                 <?php echo \Fuel\Core\Lang::get('menu.item_list'); ?>
                             </a>
                         </li>
@@ -63,34 +34,38 @@
                             </a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLang" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <?php echo (\Fuel\Core\Config::get('language') === 'ja') ? '日本語' : 'English'; ?>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownLang">
-                                <a class="dropdown-item" href="?lang=ja">日本語</a>
-                                <a class="dropdown-item" href="?lang=en">English</a>
-                            </div>
-                        </li>
-                        <?php if (\Fuel\Core\Session::get('user_name')): ?>
+                    
+                    <?php if (\Fuel\Core\Session::get('user_name')): ?>
+                        <ul class="navbar-nav">
                             <li class="nav-item">
                                 <span class="navbar-text ml-3">
                                     <?php echo \Fuel\Core\Lang::get('logged_in_as'); ?>: <?php echo htmlspecialchars(\Fuel\Core\Session::get('user_name')); ?>
                                 </span>
                             </li>
-                        <?php endif; ?>
-                    </ul>
+                        </ul>
+                    <?php endif; ?>
                 </div>
             </nav>
+            
+            <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+                <h1><?php echo Lang::get('common.monitor_title'); ?></h1>
+                <div class="action-buttons">
+                    <a href="<?php echo \Fuel\Core\Uri::base().'history'; ?>" class="btn btn-primary mr-2"><?php echo Lang::get('common.history_button'); ?></a>
+                    <a href="<?php echo \Fuel\Core\Uri::base().'items/create'; ?>" class="btn btn-success"><?php echo \Fuel\Core\Lang::get('common.new_item_button'); ?></a>
+                </div>
+            </div>
         </header>
-        <div class="content">
-            <?php if (isset($content)) { echo $content; } ?>
-        </div>
-        <footer>
-            <hr>
-            <p class="text-center">&copy; <?php echo date('Y'); ?> 貸出備品管理システム</p>
+
+        <main>
+            <?php echo isset($content) ? $content : ''; ?>
+        </main>
+
+        <footer class="mt-5 text-center text-muted">
+            <p>&copy; <?php echo date('Y'); ?> <?php echo \Fuel\Core\Lang::get('system_name'); ?></p>
         </footer>
     </div>
+
+    <?php echo \Fuel\Core\Asset::js('jquery.min.js'); ?>
+    <?php echo \Fuel\Core\Asset::js('bootstrap.bundle.min.js'); ?>
 </body>
 </html>

@@ -1,52 +1,52 @@
 <?php
 
-//namespace Fuel\App;
-
 class Controller_Item extends \Controller_Template
 {
     public function before()
     {
-        parent::before();
+            parent::before();
 
-        // F-005: 共通処理（セッションからのユーザー名取得）
-        // F-002: ログインユーザー名セッション管理
-        // 今後の多言語対応のためLangクラスも使用
+        // デバッグ用: $this->template の型を確認
+        if (!is_object($this->template)) {
+            \Fuel\Core\Log::error('DEBUG: $this->template is not an object. Type: ' . gettype($this->template));
+            // 致命的なエラーとして表示し、処理を停止
+            die('Fatal: $this->template is not an object. Please check template initialization.');
+        }
+
+        // セッションからのユーザー名取得
         $username = \Fuel\Core\Session::get('user_name', \Fuel\Core\Lang::get('guest_user'));
         \Fuel\Core\View::set_global('current_username', $username);
 
-        // F-003: nav-pills のアクティブ状態切り替えのための言語設定
-        // ユーザーが ?lang=ja または ?lang=en で言語を切り替える
-        if (\Fuel\Core\Input::get('lang')) {
-            $lang = \Fuel\Core\Input::get('lang');
-            if (in_array($lang, ['ja', 'en'])) {
-                \Fuel\Core\Config::set('language', $lang);
-                \Fuel\Core\Session::set('language', $lang); // セッションに保存
-            }
-        } else {
-            // セッションに保存された言語があればそれを使用
-            $session_lang = \Fuel\Core\Session::get('language');
-            if ($session_lang) {
-                \Fuel\Core\Config::set('language', $session_lang);
-            }
-        }
+        // FuelPHPに現在の言語設定を強制（常に日本語をデフォルトにする）
+        \Config::set('language', 'ja'); 
+        
+        // common言語ファイルを読み込む
+        \Lang::load('common', true); 
     }
 
     public function action_index()
     {
-        // F-007: DBクラスを使ってmonitor_boxテーブルから全備品を取得
-        // F-012: 備品一覧表示
-        $items = \Fuel\Core\DB::select('*')
-                                ->from('monitor_box')
-                                ->order_by('id', 'asc') // ID順にソート
-                                ->execute()
-                                ->as_array();
+        $monitors = \Fuel\Core\DB::select('*')
+                                 ->from('monitor_box')
+                                 ->order_by('id', 'asc')
+                                 ->execute()
+                                 ->as_array();
 
-        // ビューにデータを渡す
-        $this->template->title = \Fuel\Core\Lang::get('system_name'); // ページのタイトル
+        $this->template->title = \Fuel\Core\Lang::get('system_name');
         $this->template->content = \Fuel\Core\View::forge('item/index', array(
-            'items' => $items,
+            'monitors' => $monitors,
         ));
     }
 
-    // 後で貸出/返却フォームや処理のメソッドを追加します (action_lend, action_return など)
+    public function action_history()
+    {
+        $this->template->title = \Lang::get('common.history_button');
+        $this->template->content = \View::forge('item/history');
+    }
+
+    public function action_create()
+    {
+        $this->template->title = \Lang::get('common.new_item_button');
+        $this->template->content = \View::forge('item/create');
+    }
 }

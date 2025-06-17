@@ -1,0 +1,123 @@
+body { 
+    margin: 50px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card a {
+    color: #007bff;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.card p {
+    margin: 0;
+}
+
+.navbar .nav-item .nav-link.active {
+    background-color: #007bff; 
+    color: white !important;
+    border-radius: .25rem;
+}
+
+.item-label {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    display: block; 
+    width: 100%;
+}
+
+.item-label.text-danger {
+    color: #dc3545 !important;
+}
+
+.item-label.text-primary {
+    color: #007bff !important; 
+}
+
+/* .lang-switcher a { display: none; } */ /* template.php からこのHTMLが完全に削除されたため、このCSSも不要ですが、残っていても問題ありません */
+
+
+.container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* 5x3グリッドのためのカスタムCSS */
+.row.five-column-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    /* justify-content: space-between; */ /* もしアイテム数がぴったり合わないときに左右均等にしたい場合 */
+}
+
+.col-five-grid {
+    flex: 0 0 20%;
+    max-width: 20%;
+    padding-right: var(--bs-gutter-x, 0.75rem); /* Bootstrapのガター幅を再現 */
+    padding-left: var(--bs-gutter-x, 0.75rem);
+    margin-bottom: 1rem; 
+}
+
+/* レスポンシブ調整 */
+@media (max-width: 575.98px) { /* Extra small devices (portrait phones) */
+    .col-five-grid {
+        flex: 0 0 50%; /* 2列 */
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) { /* Small devices (landscape phones) */
+    .col-five-grid {
+        flex: 0 0 33.333333%; /* 3列 */
+        max-width: 33.333333%;
+    }
+}
+
+@media (min-width: 768px) { /* Medium devices (tablets) and up */
+    .col-five-grid {
+        flex: 0 0 20%; /* 5列 */
+        max-width: 20%;
+    }
+}
+
+/* Monitor タイトルにスタイルを追加 */
+h1 {
+    font-size: 2.5rem; /* 大きめのフォントサイズ */
+    font-weight: 600; /* 太めのフォント */
+    color: #343a40; /* ダークグレー */
+    /* text-shadow: 1px 1px 2px rgba(0,0,0,0.1); */ /* 必要なら影を追加 */
+}
+
+/* ナビゲーションバーの brand 名にも少しスタイルを */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff !important;
+}
+
+/* 貸出履歴/新規作成ボタンを囲む div のマージンを調整 */
+.action-buttons .btn {
+    padding: 0.5rem 1.25rem; /* ボタンのパディングを調整 */
+    font-size: 0.9rem; /* フォントサイズを少し小さく */
+    border-radius: 0.3rem; /* ボタンの角丸 */
+}
+
+/* Bootstrapのガターx変数を定義（もしstyle.cssで使っている場合） */
+:root {
+    --bs-gutter-x: 1.5rem; /* Bootstrapのデフォルトガター幅 */
+}
