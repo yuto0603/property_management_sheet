@@ -29,6 +29,9 @@ return array(
 
 	 'base_url' => '',
 
+
+	'assets_dir' => DOCROOT.'assets/',
+
 	/**
 	 * -------------------------------------------------------------------------
 	 *  Any suffix that needs to be added to

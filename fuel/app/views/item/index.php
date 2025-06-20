@@ -1,31 +1,24 @@
-<div class="container my-4">
-    <div class="row five-column-grid">
-        <?php foreach ($monitors as $monitor): ?>
-            <div class="col-five-grid"> 
-                <div class="card h-100 shadow-sm border-0 rounded-lg">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center p-3">
-                        <?php if ($monitor['status'] === '貸出中'): ?>
-                            <h4 class="card-title mb-0">
-                                <a href="<?php echo \Fuel\Core\Uri::base().'items/return/'.$monitor['id']; ?>" class="item-label text-danger">
-                                    <?= htmlspecialchars($monitor['current_user']) ?><br><?php echo \Fuel\Core\Lang::get('common.in_use'); ?>
-                                </a>
-                            </h4>
-                            <p class="mt-2 mb-0 text-muted">
-                                (<?= htmlspecialchars($monitor['label']) ?>)
-                            </p>
-                        <?php else: ?>
-                            <h4 class="card-title mb-0">
-                                <a href="<?php echo \Fuel\Core\Uri::base().'items/lend/'.$monitor['id']; ?>" class="item-label text-primary">
-                                    <?= htmlspecialchars($monitor['label']) ?>
-                                </a>
-                            </h4>
-                            <p class="mt-2 mb-0 text-muted">
-                                **<?php echo \Fuel\Core\Lang::get('available', array(), '空き', 'ja'); ?> / <?php echo \Fuel\Core\Lang::get('available', array(), 'Available', 'en'); ?>**
-                            </p>
-                        <?php endif; ?>
+<div class="monitor-grid">
+    <?php foreach ($monitors as $monitor): ?>
+        <div class="monitor-block">
+            <div class="monitor-content">
+                <?php if ($monitor['status'] === '貸出中'): ?>
+                    <div class="monitor-status in-use">
+                        <a href="<?php echo \Fuel\Core\Uri::base().'items/return/'.$monitor['id']; ?>" class="monitor-return-link">
+                            <span class="current-user"><?= htmlspecialchars($monitor['current_user']) ?></span><br>
+                            <span class="status-text"><?php echo \Fuel\Core\Lang::get('common.in_use'); ?></span>
+                        </a>
+                        <button type="button" class="return-button">返却</button>
                     </div>
-                </div>
+                <?php else: ?>
+                    <div class="monitor-status available">
+                        <a href="<?php echo \Fuel\Core\Uri::base().'items/lend/'.$monitor['id']; ?>" class="monitor-label-link">
+                            <span class="monitor-label"><?= htmlspecialchars($monitor['label']) ?></span>
+                        </a>
+                        <span class="status-text-available"><?php echo \Fuel\Core\Lang::get('available', array(), '空き'); ?></span>
+                    </div>
+                <?php endif; ?>
             </div>
-        <?php endforeach; ?>
-    </div>
+        </div>
+    <?php endforeach; ?>
 </div>

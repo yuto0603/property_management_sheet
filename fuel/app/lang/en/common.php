@@ -15,4 +15,13 @@ return array(
     'available' => 'Available', 
     'available_ja' => '空き',
     'available_en' => 'Available',
+
+    // 貸出機能関連の新しい言語キー
+    'lend_item_title' => 'Lend Item', 
+    'lend_item_description' => 'Lend :label', 
+    'your_name' => 'Your Name', 
+    'lend_button' => 'Lend', 
+    'cancel_button' => 'Cancel',
+    'lend_input_error' => 'Please enter your name.',
+    'lend_success' => 'Item has been lent.', 
 );

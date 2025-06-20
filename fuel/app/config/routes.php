@@ -5,6 +5,7 @@ return array(
 
     'items' => 'item/index',
     'items/lend/(:id)' => 'item/lend/$1',
+     'items/process_lend' => 'item/process_lend',
     'items/return/(:id)' => 'item/return/$1',
     'history' => 'item/history',
     'items/create' => 'item/create',

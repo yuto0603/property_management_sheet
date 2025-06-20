@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
@@ -165,8 +166,6 @@ $routerequest = function($request = null, $e = false)
 
 try
 {
-	// Boot the app...
-	require APPPATH.'bootstrap.php';
 
 	// ... and execute the main request
 	$response = $routerequest();

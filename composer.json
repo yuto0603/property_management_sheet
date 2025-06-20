@@ -36,10 +36,8 @@
         "vendor-dir": "fuel/vendor",
         "allow-plugins": {
             "composer/installers": true
-        },
-        "platform": {
-            "php": "8.0"
         }
+        
     },
     "extra": {
         "installer-paths": {
